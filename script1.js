@@ -1,10 +1,28 @@
-const displayTime = () => {
+const getTimeDate = () => {
   let now = new Date();
   let hours = now.getHours();
   let minutes = now.getMinutes();
   let seconds = now.getSeconds();
   let amPm;
 
+  let month = now.getMonth();
+  let day = now.getDay();
+  let date = now.getDate();
+  let year = now.getFullYear();
+
+  let timeReady = formatTimeNow(hours, minutes, seconds, amPm);
+  let dateReady = formatDateNow(month, day, date,year);
+  
+  let timeDisplay = (document.getElementById("time").textContent = timeReady);
+  let dateDisplay = (document.getElementById("date").textContent = dateReady);
+
+  return {
+    dateDisplay,
+    timeDisplay,
+  };
+};
+
+const formatTimeNow = (hours, minutes, seconds, amPm) => {
   if (minutes < 10) {
     minutes = "0" + minutes;
   }
@@ -13,7 +31,7 @@ const displayTime = () => {
     seconds = "0" + seconds;
   }
 
-  if (hours <= 12) {
+  if (hours < 12) {
     amPm = "AM";
   } else {
     amPm = "PM";
@@ -25,17 +43,12 @@ const displayTime = () => {
     hours = hours - 12;
   }
 
-  let timeDisplay = `${hours}:${minutes}:${seconds} ${amPm}`
+  let timeFormat = `${hours}:${minutes}:${seconds} ${amPm}`;
 
-  return (document.getElementById("time").textContent = timeDisplay);
+  return timeFormat;
 };
 
-const displayDate = () => {
-  let now = new Date();
-  let month = now.getMonth();
-  let day = now.getDay();
-  let date = now.getDate();
-  let year = now.getFullYear();
+const formatDateNow = (month, day, date,year) => {
 
   const dayOfTheWeek = [
     "Sunday",
@@ -62,14 +75,14 @@ const displayDate = () => {
   ];
 
   dayOfTheWeek.forEach(
-    (formatDay = () => {
-      return (formatDay = dayOfTheWeek[day]);
+    (assignDay = () => {
+      return (assignDay = dayOfTheWeek[day]);
     })
   );
 
   monthOfTheYear.forEach(
-    (formatMont = () => {
-      return (formatMonth = monthOfTheYear[month]);
+    (assignMonth = () => {
+      return (assignMonth = monthOfTheYear[month]);
     })
   );
 
@@ -83,15 +96,14 @@ const displayDate = () => {
     date = date + "th";
   }
 
-  let dateDisplay = [`${formatDay}, ${formatMonth} ${date} ${year}`];
+  let dateFormat = `${assignDay}, ${assignMonth} ${date} ${year}`;
 
-  return document.getElementById("date").textContent = dateDisplay;
+  return dateFormat;
+}
+
+const ScreenDisplay = () => {
+  getTimeDate();
+  setInterval(getTimeDate, 1000);
 };
 
-const displayDateTime = () => {
-  displayTime();
-  displayDate();
-};
-
-displayDateTime();
-setInterval(displayDateTime, 1000);
+ScreenDisplay();
