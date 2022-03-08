@@ -1,56 +1,15 @@
 const getTimeDate = () => {
-  let now = new Date();
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  let seconds = now.getSeconds();
-  let amPm;
+  const now = new Date();
+  const hours = displayTwelveHourClock(now.getHours());
+  const minutes = addLeadingZero(now.getMinutes());
+  const seconds = addLeadingZero(now.getSeconds());
+  const isAm = hours < 12 || hours === 0;
+  let amPm = isAm ? "AM" : "PM";
 
-  let month = now.getMonth();
-  let day = now.getDay();
-  let date = now.getDate();
-  let year = now.getFullYear();
+  const date = convertToOrdinal(now.getDate());
+  const year = now.getFullYear();
 
-  let timeReady = formatTimeNow(hours, minutes, seconds, amPm);
-  let dateReady = formatDateNow(month, day, date,year);
-  
-  let timeDisplay = (document.getElementById("time").textContent = timeReady);
-  let dateDisplay = (document.getElementById("date").textContent = dateReady);
-
-  return {
-    dateDisplay,
-    timeDisplay,
-  };
-};
-
-const formatTimeNow = (hours, minutes, seconds, amPm) => {
-  if (minutes < 10) {
-    minutes = "0" + minutes;
-  }
-
-  if (seconds < 10) {
-    seconds = "0" + seconds;
-  }
-
-  if (hours < 12) {
-    amPm = "AM";
-  } else {
-    amPm = "PM";
-  }
-
-  if (hours === 00 || hours === 0) {
-    hours = 12;
-  } else if (hours > 12) {
-    hours = hours - 12;
-  }
-
-  let timeFormat = `${hours}:${minutes}:${seconds} ${amPm}`;
-
-  return timeFormat;
-};
-
-const formatDateNow = (month, day, date,year) => {
-
-  const dayOfTheWeek = [
+  const assignDay = [
     "Sunday",
     "Monday",
     "Tusday",
@@ -59,7 +18,7 @@ const formatDateNow = (month, day, date,year) => {
     "Friday",
     "Sauturday",
   ];
-  const monthOfTheYear = [
+  const assignMonth = [
     "January",
     "February",
     "March",
@@ -74,32 +33,46 @@ const formatDateNow = (month, day, date,year) => {
     "December",
   ];
 
-  dayOfTheWeek.forEach(
-    (assignDay = () => {
-      return (assignDay = dayOfTheWeek[day]);
-    })
-  );
+  const month = assignMonth[now.getMonth()];
+  const day = assignDay[now.getDay()];
 
-  monthOfTheYear.forEach(
-    (assignMonth = () => {
-      return (assignMonth = monthOfTheYear[month]);
-    })
-  );
+  const timeFormat = `${hours}:${minutes}:${seconds} ${amPm}`;
+  const dateFormat = `${day}, ${month} ${date} ${year}`;
 
-  if (date === 01 || date === 21 || date === 31) {
-    date = date + "st";
-  } else if (date === 02 || date === 22) {
-    date = date + "nd";
-  } else if (date === 03 || date === 23) {
-    date = date + "rd";
-  } else {
-    date = date + "th";
+  const timeDisplay = (document.getElementById("time").textContent =
+    timeFormat);
+  const dateDisplay = (document.getElementById("date").textContent =
+    dateFormat);
+
+  return {
+    dateDisplay,
+    timeDisplay,
+  };
+};
+
+const convertToOrdinal = (number) => {
+  if (number < 10 || number > 20) {
+    switch (number % 10) {
+      case 1:
+        return number + "st";
+      case 2:
+        return number + "nd";
+      case 3:
+        return number + "rd";
+    }
+    return number + 'th'
   }
+};
 
-  let dateFormat = `${assignDay}, ${assignMonth} ${date} ${year}`;
+const displayTwelveHourClock = (hours) => {
+  hours = hours >= 13 ? hours - 12 : hours;
+  hours = hours === 0 ? hours + 12 : hours;
+  return hours;
+};
 
-  return dateFormat;
-}
+const addLeadingZero = (number) => {
+  return number < 10 ? "0" + number : number;
+};
 
 const ScreenDisplay = () => {
   getTimeDate();
