@@ -1,6 +1,8 @@
 # Clock App
 This was my first application written using HTML, CSS, and JavaScript. The app was created to automatically display current date and time upon launch.
 
+### Try is - [here](https://jumba23.github.io/Clock-app/)
+
 # App
 ![Clock APP](https://user-images.githubusercontent.com/80366503/157328965-fc1bf3cb-ab19-46f0-896f-3f99122b147f.png)
 
