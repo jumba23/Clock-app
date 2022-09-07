@@ -12,11 +12,11 @@ const getTimeDate = () => {
   const assignDay = [
     "Sunday",
     "Monday",
-    "Tusday",
+    "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
-    "Sauturday",
+    "Saturday",
   ];
   const assignMonth = [
     "January",
